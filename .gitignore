@@ -1,0 +1,40 @@
+# Model files (too large for GitHub)
+*.pt
+*.weights
+*.caffemodel
+*.h5
+*.onnx
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Output files
+*.avi
+*.mp4
+output_videos/*.avi
+output_videos/*.mp4
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
