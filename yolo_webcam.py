@@ -112,14 +112,16 @@ def main():
         print("Error: Could not open selected camera.")
         return
 
-    # Get screen resolution
+    # Get screen resolution and set high FPS
     screen_res = (1280, 720)  # Set to a common resolution
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, screen_res[0])
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, screen_res[1])
+    cap.set(cv2.CAP_PROP_FPS, 30)  # Set to 30 FPS
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Reduce buffer for lower latency
 
-    # Create output video file
+    # Create output video file with higher FPS
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter(os.path.join(output_dir, 'output.avi'), fourcc, 20.0, screen_res)
+    out = cv2.VideoWriter(os.path.join(output_dir, 'output.avi'), fourcc, 30.0, screen_res)
 
     path_points = []
     last_path_update_time = time.time()
@@ -133,8 +135,8 @@ def main():
             print("Error: Failed to capture image.")
             break
 
-        # YOLOv8 detection using Ultralytics
-        results = FaceDetector(frame)
+        # YOLOv8 detection using Ultralytics with performance optimization
+        results = FaceDetector(frame, imgsz=640, conf=0.25, iou=0.4, verbose=False)
         boxes = results[0].boxes.data.cpu().numpy()  # [N, 6] (x1, y1, x2, y2, conf, cls)
 
         annotated_frame = frame.copy()
@@ -143,7 +145,7 @@ def main():
         for box in boxes:
             x1, y1, x2, y2, score, cls = box
             print(f"Detected box: {x1}, {y1}, {x2}, {y2}, score: {score}, class: {cls}")
-            if score < 0.3:
+            if score < 0.25:  # Lowered threshold for more detections
                 continue
             x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
             label = int(cls)
