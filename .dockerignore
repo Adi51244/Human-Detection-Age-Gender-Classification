@@ -1,0 +1,53 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Model files (will be downloaded)
+*.pt
+*.weights
+*.onnx
+*.h5
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Output files
+*.avi
+*.mp4
+output_videos/*.avi
+output_videos/*.mp4
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Other unnecessary files
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
